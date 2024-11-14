@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack - Cassino Online</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Função para criar o baralho
+        function createDeck() {
+            const suits = ['♥', '♦', '♣', '♠'];
+            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+            const deck = [];
+
+            for (let suit of suits) {
+                for (let value of values) {
+                    deck.push({ value: value, suit: suit });
+                }
+            }
+
+            return deck.sort(() => Math.random() - 0.5); // Embaralha o deck
+        }
+
+        // Função para calcular o valor das cartas
+        function calculateHandValue(hand) {
+            let value = 0;
+            let aceCount = 0;
+
+            hand.forEach(card => {
+                if (card.value === 'A') {
+                    value += 11;
+                    aceCount++;
+                } else if (['K', 'Q', 'J'].includes(card.value)) {
+                    value += 10;
+                } else {
+                    value += parseInt(card.value);
+                }
+            });
+
+            // Ajusta o valor caso o jogador tenha Áses (para não ultrapassar 21)
+            while (value > 21 && aceCount > 0) {
+                value -= 10;
+                aceCount--;
+            }
+
+            return value;
+        }
+
+        // Função para iniciar o jogo
+        function startGame() {
+            deck = createDeck();
+            playerHand = [deck.pop(), deck.pop()];
+            dealerHand = [deck.pop(), deck.pop()];
+
+            document.getElementById('player-hand').innerHTML = showCards(playerHand);
+            document.getElementById('dealer-hand').innerHTML = "Carta do Dealer: " + dealerHand[0].value + dealerHand[0].suit;
+            document.getElementById('game-message').innerHTML = "Sua vez! Escolha uma ação.";
+
+            updateScores();
+        }
+
+        // Função para mostrar as cartas
+        function showCards(hand) {
+            return hand.map(card => card.value + card.suit).join(' | ');
+        }
+
+        // Função para atualizar o placar
+        function updateScores() {
+            let playerValue = calculateHandValue(playerHand);
+            let dealerValue = calculateHandValue(dealerHand);
+
+            document.getElementById('player-score').innerText = "Sua mão: " + playerValue;
+            document.getElementById('dealer-score').innerText = "Mão do Dealer: " + dealerValue;
+
+            if (playerValue > 21) {
+                document.getElementById('game-message').innerText = "Você perdeu! Sua mão ultrapassou 21.";
+                disableButtons();
+            } else if (dealerValue > 21) {
+                document.getElementById('game-message').innerText = "Você ganhou! O dealer ultrapassou 21.";
+                disableButtons();
+            }
+        }
+
+        // Função para pedir uma carta
+        function hit() {
+            playerHand.push(deck.pop());
+            document.getElementById('player-hand').innerHTML = showCards(playerHand);
+            updateScores();
+        }
+
+        // Função para passar a vez para o dealer
+        function stand() {
+            let dealerValue = calculateHandValue(dealerHand);
+
+            while (dealerValue < 17) {
+                dealerHand.push(deck.pop());
+                dealerValue = calculateHandValue(dealerHand);
+            }
+
+            document.getElementById('dealer-hand').innerHTML = showCards(dealerHand);
+            updateScores();
+
+            // Determina quem ganhou
+            let playerValue = calculateHandValue(playerHand);
+            if (dealerValue > 21 || playerValue > dealerValue) {
+                document.getElementById('game-message').innerText = "Você ganhou!";
+            } else if (dealerValue > playerValue) {
+                document.getElementById('game-message').innerText = "O dealer ganhou!";
+            } else {
+                document.getElementById('game-message').innerText = "Empate!";
+            }
+
+            disableButtons();
+        }
+
+        // Função para desabilitar os botões após o fim do jogo
+        function disableButtons() {
+            document.getElementById('hit-btn').disabled = true;
+            document.getElementById('stand-btn').disabled = true;
+        }
+
+        // Variáveis do jogo
+        let deck, playerHand, dealerHand;
+
+        // Inicia o jogo quando a página carregar
+        window.onload = startGame;
+    </script>
+</head>
+<body class="blackjack-page">
+    <header>
+        <h1>Blackjack - Vai Que Dá Certo</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="niquel.html">Caça-Níquel</a></li>
+                <li><a href="poker.html">Poker</a></li>
+                <li><a href="jack.html">Blackjack</a></li>
+                <li><a href="informacoes.html">Informações</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Jogo de Blackjack</h2>
+        <p>Objetivo: Chegar o mais próximo possível de 21 pontos, sem ultrapassar!</p>
+
+        <div>
+            <p id="dealer-score"></p>
+            <p id="dealer-hand"></p>
+        </div>
+        <div>
+            <p id="player-score"></p>
+            <p id="player-hand"></p>
+        </div>
+
+        <div id="game-message"></div>
+
+        <div>
+            <button id="hit-btn" onclick="hit()">Pedir Carta</button>
+            <button id="stand-btn" onclick="stand()">Parar</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Vai Que Dá Certo - Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

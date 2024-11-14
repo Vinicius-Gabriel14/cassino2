@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker - Cassino Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Poker - Cassino Online</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="poker.html">Poker</a></li>
+                <li><a href="blackjack.html">Blackjack</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="game-container">
+        <div id="game-info">
+            <div id="balance">Saldo: R$ 1000</div>
+            <div id="bet-amount">Aposta: R$ 0</div>
+        </div>
+
+        <div id="cards-container">
+            <h3>Suas Cartas</h3>
+            <div id="player-cards"></div>
+            <h3>Cartas Comunitárias</h3>
+            <div id="community-cards"></div>
+        </div>
+
+        <div id="game-actions">
+            <button id="bet-button">Apostar</button>
+            <button id="fold-button">Desistir</button>
+            <button id="call-button">Chamar</button>
+            <button id="raise-button">Aumentar</button>
+        </div>
+
+        <div id="game-message"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Cassino Online - Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="poker.js"></script>
+</body>
+</html>

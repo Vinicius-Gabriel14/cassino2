@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça-Níquel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Caça-Níquel</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="niquel.html">Caça-Níquel</a></li>
+                <li><a href="poker.html">Poker</a></li>
+                <li><a href="jack.html">Blackjack</a></li>
+                <li><a href="informacoes.html">Informações</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Gire os rolos e tente a sorte!</h2>
+
+        <!-- Exibir saldo -->
+        <div id="saldo">
+            <p>Saldo: R$ <span id="saldo-valor">100</span></p>
+        </div>
+
+        <!-- Campo de aposta -->
+        <div id="aposta">
+            <label for="valor-aposta">Digite o valor da aposta: </label>
+            <input type="number" id="valor-aposta" min="1" value="1">
+        </div>
+
+        <!-- Botão de girar -->
+        <button id="girar">Girar</button>
+
+        <!-- Resultados -->
+        <div id="resultados">
+            <p>Resultado: </p>
+            <p id="result"></p>
+        </div>
+
+        <!-- Slots -->
+        <div id="slots">
+            <span id="slot1">🍒</span>
+            <span id="slot2">🍋</span>
+            <span id="slot3">🍊</span>
+        </div>
+
+        <!-- Histórico de ganhos e perdas -->
+        <div id="historico">
+            <h3>Histórico</h3>
+            <ul id="historico-lista"></ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Vai Que Dá Certo - Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
